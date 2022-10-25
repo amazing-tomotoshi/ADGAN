@@ -1,7 +1,7 @@
 import os
 
 # path for downloaded fashion images
-root_fashion_dir = 'your_path/deepfashion'
+root_fashion_dir = 'data/deepfashion'
 assert len(root_fashion_dir) > 0, 'please give the path of raw deep fashion dataset!'
 
 train_images = []
@@ -18,21 +18,21 @@ for lines in test_f:
 	if lines.endswith('.jpg'):
 		test_images.append(lines)
 
-train_path = os.path.join(root_fashion_dir,'train')
+train_path = os.path.join(root_fashion_dir, 'fashion_resize','train')
 if not os.path.exists(train_path):
 	os.mkdir(train_path)
 
 for item in train_images:
-	from_ = os.path.join(root_fashion_dir, item)
+	from_ = os.path.join(root_fashion_dir, 'img', item)
 	to_ = os.path.join(train_path, item)
 	os.system('cp %s %s' %(from_, to_))
 
 
-test_path = os.path.join(root_fashion_dir,'test')
+test_path = os.path.join(root_fashion_dir, 'fashion_resize','test')
 if not os.path.exists(test_path):
 	os.mkdir(test_path)
 
 for item in test_images:
-	from_ = os.path.join(root_fashion_dir, item)
+	from_ = os.path.join(root_fashion_dir, 'img', item)
 	to_ = os.path.join(test_path, item)
 	os.system('cp %s %s' %(from_, to_))
