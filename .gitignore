@@ -2,3 +2,5 @@ data/img/
 data/deepfashion/
 data/images.zip
 *.pyc
+results/
+checkpoints/
