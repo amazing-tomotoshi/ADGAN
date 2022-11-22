@@ -34,10 +34,22 @@ class ADGen(nn.Module):
         # reconstruct an image
 
         content = self.enc_content(img_A)
-        style = self.enc_style(img_B, sem_B)
-        style = self.fc(style.view(style.size(0), -1))
-        style = torch.unsqueeze(style, 2)
-        style = torch.unsqueeze(style, 3)
+        style1 = self.enc_style(img_B, sem_B)
+        style1 = self.fc(style1.view(style1.size(0), -1))
+        style1 = torch.unsqueeze(style1, 2)
+        style1 = torch.unsqueeze(style1, 3)
+
+        style2 = self.enc_style(img_B, sem_B)
+        style2 = self.fc(style2.view(style2.size(0), -1))
+        style2 = torch.unsqueeze(style2, 2)
+        style2 = torch.unsqueeze(style2, 3)
+
+        style3 = self.enc_style(img_B, sem_B)
+        style3 = self.fc(style3.view(style3.size(0), -1))
+        style3 = torch.unsqueeze(style3, 2)
+        style3 = torch.unsqueeze(style3, 3)
+
+        style = (style1 + style2 + style3) / 3
 
         images_recon = self.decode(content, style)
         return images_recon

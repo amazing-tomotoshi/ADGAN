@@ -14,11 +14,14 @@ class KeyDataset(BaseDataset):
     def initialize(self, opt):
         self.opt = opt
         self.root = opt.dataroot
+        # dataroot=./data/deepfashion/fashion_resize
+        # phase = test or train
         self.dir_P = os.path.join(opt.dataroot, opt.phase) #person images
         self.dir_K = os.path.join(opt.dataroot, opt.phase + 'K') #keypoints
         self.dir_SP = opt.dirSem #semantic
         self.SP_input_nc = opt.SP_input_nc
 
+        # pairLst = ./data/deepfashion/fashion-resize-pairs-test.csv or./data/deepfashion/fashion-resize-pairs-train.csv
         self.init_categories(opt.pairLst)
         self.transform = get_transform(opt)
 
