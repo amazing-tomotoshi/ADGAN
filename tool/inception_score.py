@@ -10,6 +10,8 @@ import tarfile
 import numpy as np
 from six.moves import urllib
 import tensorflow as tf
+import tensorboard as tb
+tf.io.gfile = tb.compat.tensorflow_stub.io.gfile
 import glob
 import scipy.misc
 import math
@@ -35,7 +37,7 @@ def get_inception_score(images, splits=10):
     img = img.astype(np.float32)
     inps.append(np.expand_dims(img, 0))
   bs = 10
-  with tf.Session() as sess:
+  with tf.compat.v1.Session() as sess:
     preds = []
     n_batches = int(math.ceil(float(len(inps)) / float(bs)))
     for i in range(n_batches):
@@ -71,19 +73,23 @@ def _init_inception():
     statinfo = os.stat(filepath)
     print('Succesfully downloaded', filename, statinfo.st_size, 'bytes.')
   tarfile.open(filepath, 'r:gz').extractall(MODEL_DIR)
-  with tf.gfile.FastGFile(os.path.join(
+  with tf.io.gfile.GFile(os.path.join(
       MODEL_DIR, 'classify_image_graph_def.pb'), 'rb') as f:
-    graph_def = tf.GraphDef()
+    graph_def = tf.compat.v1.GraphDef()
     graph_def.ParseFromString(f.read())
     _ = tf.import_graph_def(graph_def, name='')
   # Works with an arbitrary minibatch size.
-  with tf.Session() as sess:
+  with tf.compat.v1.Session() as sess:
     pool3 = sess.graph.get_tensor_by_name('pool_3:0')
     ops = pool3.graph.get_operations()
     for op_idx, op in enumerate(ops):
         for o in op.outputs:
+            print(o)
             shape = o.get_shape()
-            shape = [s.value for s in shape]
+            print('shape')
+            print(shape)
+            shape = [s for s in shape]
+            print(shape)
             new_shape = []
             for j, s in enumerate(shape):
                 if s == 1 and j == 0:

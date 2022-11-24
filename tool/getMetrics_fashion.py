@@ -2,7 +2,7 @@ import os
 from inception_score import get_inception_score
 
 from skimage.io import imread, imsave
-from skimage.measure import compare_ssim
+from skimage.metrics import structural_similarity
 
 import numpy as np
 import pandas as pd
@@ -23,7 +23,7 @@ def l1_score(generated_images, reference_images):
 def ssim_score(generated_images, reference_images):
     ssim_score_list = []
     for reference_image, generated_image in zip(reference_images, generated_images):
-        ssim = compare_ssim(reference_image, generated_image, gaussian_weights=True, sigma=1.5,
+        ssim = structural_similarity(reference_image, generated_image, gaussian_weights=True, sigma=1.5,
                             use_sample_covariance=False, multichannel=True,
                             data_range=generated_image.max() - generated_image.min())
         ssim_score_list.append(ssim)
@@ -118,7 +118,7 @@ if __name__ == "__main__":
     # generated_images_dir = '/mnt/cephfs_hl/common/lab/menyifang/code/Pose-Transfer0730/results/fashion_AdaGen_sty512_nres8_lre3_noVGG_test/test_2000/images'
     # generated_images_dir = '/mnt/cephfs_hl/common/lab/menyifang/code/Pose-Transfer0803/results/fashion_AdaGen_sty512_nres8_lre3_SS/test_1000/images'
 
-    generated_images_dir = '/data00/home/menyifang/code/Pose-Transfer0819_fix/results/fashion_AdaGen_sty512_nres8_lre3_SS_fc_vgg_cxloss_ss_19fix_semanticGraph_mer5/test_1000/images/'
+    generated_images_dir = './results/ture_fashion_AdaGen_sty512_nres8_lre3_SS_fc_vgg_cxloss_ss_merge3/test_800/images'
     annotations_file_test = 'fashion_data/fashion-resize-annotation-test.csv'
     print(generated_images_dir)
     test(generated_images_dir, annotations_file_test)
