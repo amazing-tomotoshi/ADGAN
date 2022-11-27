@@ -167,6 +167,7 @@ class KeyDataset(BaseDataset):
             SP1[id] = (SP1_data == id).astype('float32')
             SP1_name = self.split_name(P1_name, 'semantic_merge3')
         
+        SP2_name = self.split_name(P2_name, 'semantic_merge3')
         SP2_path = os.path.join(self.dir_SP, SP2_name)
         SP2_path = SP2_path[:-4] + '.npy'
         SP2_data = np.load(SP2_path)
