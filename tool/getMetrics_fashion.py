@@ -118,7 +118,7 @@ if __name__ == "__main__":
     # generated_images_dir = '/mnt/cephfs_hl/common/lab/menyifang/code/Pose-Transfer0730/results/fashion_AdaGen_sty512_nres8_lre3_noVGG_test/test_2000/images'
     # generated_images_dir = '/mnt/cephfs_hl/common/lab/menyifang/code/Pose-Transfer0803/results/fashion_AdaGen_sty512_nres8_lre3_SS/test_1000/images'
 
-    generated_images_dir = './results/ture_fashion_AdaGen_sty512_nres8_lre3_SS_fc_vgg_cxloss_ss_merge3/test_800/images'
+    generated_images_dir = './results/fashion_AdaGen_sty512_nres8_lre3_SS_fc_vgg_cxloss_ss_merge3/test_800/images'
     annotations_file_test = 'fashion_data/fashion-resize-annotation-test.csv'
     print(generated_images_dir)
     test(generated_images_dir, annotations_file_test)

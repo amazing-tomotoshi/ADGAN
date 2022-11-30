@@ -30,7 +30,7 @@ class ADGen(nn.Module):
         # fusion module
         self.mlp = MLP(style_dim, self.get_num_adain_params(self.dec), mlp_dim, 3, norm='none', activ=activ)
 
-    def forward(self, img_A, img_B, sem_B):
+    def forward(self, img_A, img_B, sem_B, img_C, sem_C, img_D, sem_D):
         # reconstruct an image
 
         content = self.enc_content(img_A)
@@ -39,12 +39,12 @@ class ADGen(nn.Module):
         style1 = torch.unsqueeze(style1, 2)
         style1 = torch.unsqueeze(style1, 3)
 
-        style2 = self.enc_style(img_B, sem_B)
+        style2 = self.enc_style(img_C, sem_C)
         style2 = self.fc(style2.view(style2.size(0), -1))
         style2 = torch.unsqueeze(style2, 2)
         style2 = torch.unsqueeze(style2, 3)
 
-        style3 = self.enc_style(img_B, sem_B)
+        style3 = self.enc_style(img_D, sem_D)
         style3 = self.fc(style3.view(style3.size(0), -1))
         style3 = torch.unsqueeze(style3, 2)
         style3 = torch.unsqueeze(style3, 3)
